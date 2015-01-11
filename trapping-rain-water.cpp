@@ -14,8 +14,8 @@ public:
                     }
                     ++j;
                 }
+                if (A[i] >= A[maxdex]) maxdex = i;
             }
-            if (A[i] >= A[maxdex]) maxdex = i;
         }
         return ans;
     }
