@@ -2,19 +2,21 @@ class Solution {
 public:
     int trap(int A[], int n) {
         if (n <= 2) return 0;
-        int ans = 0, val, maxdex = (A[0] > A[1] ? 0 : 1);
-        for (int i = maxdex + 1, j = 0; i < n; ++i) {
-            if (A[i] > A[i-1]) {
-                j = maxdex;
-                val = min(A[maxdex], A[i]);
-                while (j + 1 < i) {
-                    if (val >= A[j+1]) {
-                        ans += val - A[j+1];
-                        A[j+1] = val; 
-                    }
-                    ++j;
+        int ans = 0, lmax = A[0], rmax = A[n-1], i = 0, j = n - 1;
+        while (i <= j) {
+            if (lmax < rmax) {
+                if (A[i] > lmax) {
+                    lmax = A[i++];
+                } else {
+                    ans += lmax - A[i++];
                 }
-                if (A[i] >= A[maxdex]) maxdex = i;
+            }
+            else {
+                if (A[j] > rmax) {
+                    rmax = A[j--];
+                } else {
+                    ans += rmax - A[j--];
+                }
             }
         }
         return ans;
