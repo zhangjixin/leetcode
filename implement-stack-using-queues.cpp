@@ -2,35 +2,29 @@ class Stack {
 public:
     // Push element x onto stack.
     void push(int x) {
-        if (!Que[idx].empty()) {
-            Que[idx^1].push(Que[idx].front());
-            Que[idx].pop();
+        Que.push(x);
+        len = Que.size();
+        for (int i = 0; i < len - 1; ++i) {
+            Que.push(Que.front());
+            Que.pop();
         }
-        Que[idx].push(x);
     }
 
     // Removes the element on top of the stack.
     void pop() {
-        Que[idx].pop();
-        idx ^= 1;
-        len = Que[idx].size();
-        while (len > 1) {
-            Que[idx^1].push(Que[idx].front());
-            Que[idx].pop();
-            --len;
-        }
+        Que.pop();
     }
 
     // Get the top element.
     int top() {
-        return Que[idx].front();
+        return Que.front();
     }
 
     // Return whether the stack is empty.
     bool empty() {
-        return Que[0].empty() && Que[1].empty();
+        return Que.empty();
     }
 private :
-    queue<int> Que[2];
-    int idx = 0, len = 0;
+    queue<int> Que;
+    int len = 0;
 };
