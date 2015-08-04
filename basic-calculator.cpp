@@ -53,3 +53,39 @@ public:
         return a - b;
     }
 };
+
+
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> val;
+        int n = s.size(), sum = 0, sign = 1, num = 0;
+        for (int i = 0; i < n; ++i) {
+            if (s[i] >= '0' && s[i] <= '9') {
+                num = num * 10 + (s[i] - '0');
+            }
+            else if (s[i] == '+' || s[i] == '-') {
+                sum += num * sign;
+                num = 0;
+                sign = s[i] == '+' ? 1 : -1;
+            }
+            else if (s[i] == '(') {
+                val.push(sum);
+                val.push(sign);
+                sum = 0;
+                sign = 1;
+            }
+            else if (s[i] == ')') {
+                sum += num * sign;
+                sum *= val.top();
+                val.pop();
+                sum += val.top();
+                val.pop();
+                num = 0;
+            }
+        }
+        if (num != 0) 
+            sum += num * sign;
+        return sum;
+    }
+};
